@@ -5,6 +5,7 @@ from sarufi import Sarufi
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from starlette.datastructures import FormData
+from mangum import Mangum
 
 load_dotenv()
 
@@ -19,6 +20,7 @@ sarufi = Sarufi(os.getenv('SARUFI_API_KEY'))
 sms = africastalking.SMS
 
 app = FastAPI()
+handler = Mangum(app)
 
 @app.post("/sms")
 async def form_data_endpoint(request: Request):
