@@ -29,6 +29,7 @@ async def form_data_endpoint(request: Request):
     text = form_data['text']
     to = form_data['to']
     from_number = form_data['from']
+    from_number = from_number.replace('+', '')
     
     logging.info(f"Message received from {from_number}")
     
