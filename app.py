@@ -22,7 +22,7 @@ sms = africastalking.SMS
 app = FastAPI()
 handler = Mangum(app)
 
-@app.post("/sms")
+@app.post("/")
 async def form_data_endpoint(request: Request):
     form_data: FormData = await request.form()
     text = form_data['text']
