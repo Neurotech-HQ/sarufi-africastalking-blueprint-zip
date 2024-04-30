@@ -51,7 +51,6 @@ async def form_data_endpoint(request: Request):
         message = response.get('message', 'Sorry, I did not understand that')
         if isinstance(message, list):
             if len(message) > 1:
-                message = message[0]
                 if isinstance(message[0], list):
                     message = random.choice(message)
             message = '\n'.join(message)
