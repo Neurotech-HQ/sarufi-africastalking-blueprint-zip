@@ -1,4 +1,5 @@
 import os 
+import random
 import logging
 import africastalking
 from sarufi import Sarufi
@@ -31,6 +32,11 @@ async def form_data_endpoint(request: Request):
     
     logging.info(f"Message received from {from_number}")
     
+    # remove the keyword from the text
+    if to =='15054':
+        text_list = text.split(' ')
+        text = ' '.join(text_list[1:])
+    
     # Integrate Sarufi with sarufi here  and send the response to the user
     response = sarufi.chat(
         bot_id=os.getenv('SARUFI_BOT_ID'),
@@ -43,6 +49,12 @@ async def form_data_endpoint(request: Request):
     if response:
         logging.info(response)
         message = response.get('message', 'Sorry, I did not understand that')
+        if isinstance(message, list):
+            if len(message) > 1:
+                message = message[0]
+                if isinstance(message[0], list):
+                    message = random.choice(message)
+            message = '\n'.join(message)
         sms.send(message = message, recipients=[from_number], sender_id=to)
         logging.info(f"Message sent to {from_number}")
     return {"status": "data received"}
