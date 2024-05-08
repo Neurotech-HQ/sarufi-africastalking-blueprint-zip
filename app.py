@@ -29,7 +29,7 @@ async def form_data_endpoint(request: Request):
     text = form_data['text']
     to = form_data['to']
     from_number = form_data['from']
-    from_number = from_number.replace('+', '')
+    chat_id= from_number.replace('+', '')
     
     logging.info(f"Message received from {from_number}")
     
@@ -41,7 +41,7 @@ async def form_data_endpoint(request: Request):
     # Integrate Sarufi with sarufi here  and send the response to the user
     response = sarufi.chat(
         bot_id=os.getenv('SARUFI_BOT_ID'),
-        chat_id=from_number,
+        chat_id=chat_id,
         message=text,
         message_type='text',
         channel='general'
